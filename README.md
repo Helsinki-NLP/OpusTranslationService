@@ -14,6 +14,18 @@ The service can be used to run [OPUS-MT machine translation models](https://opus
 6. Zip the converted models to a file _models.zip_ and add the file to the repository root (Git LFS is recommended, as the file can be large).
 7. If you are using the OpenShift container platform, you can deploy the app by using the [Import from Git functionality in OpenShift](https://access.redhat.com/documentation/en-us/red_hat_openshift_data_science/1/html/developing_a_data_model/creating-an-openshift-application-from-a-git-repository_deploy-models). Deployment on Kubernetes has not been tested, but as the platforms are compatible, the service should be deployable on Kubernetes using a similar functionality.
 
+## Local testing
+The service can be tested locally before deployment to verify it works as intended. It is best to perform the testing in a Python virtual environment.
+
+1. Install the service as a pip module by running `pip install -e .`
+2. The service depends on modified _argos-translate_ and _argos-translate-files_ modules, install them as follows:
+   - `git clone git@github.com:TommiNieminen/argos-translate.git; pip install -e argos-translate`
+   - `git clone git@github.com:TommiNieminen/argos-translate-files.git; pip install -e argos-translate-files`
+3. Set the ARGOS_PACKAGE_DIR environment variable that allows the service to find the models. For instance, if you are in the directory that contains the models in a _models_ subdirectory, run the command `export ARGOS_PACKAGE_DIR=$(realpath ./models)`.
+4. Start the service by executing `libretranslate`.
+
+The service will be available for testing at _localhost:5000_.
+
 ## Credits
 
 This work is built on open source software developed by others. The web service is a slightly modified version of [LibreTranslate](https://libretranslate.com), which itself utilizes the [Argos Translate](https://github.com/argosopentech/argos-translate) translation library (which uses the [CTranslate2](https://github.com/OpenNMT/CTranslate2) library for generating translations). This service is not officially associated with LibreTranslate or its products.
